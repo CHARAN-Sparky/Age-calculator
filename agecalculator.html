@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <meta name="google-site-verification" content="iNzSj2wvdEOVu1PtrK5FfEiu_teOG2LQn5i3kg-xozQ" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #4203a9, #90bafc);
+            color: #ffff76;
+            text-align: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            font-size: 2em;
+            font-weight: bold;
+            color: red;
+            margin-bottom: 20px;
+        }
+
+        .calculator {
+            width: 100%;
+        }
+
+        .calculator h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .input-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .input-box input {
+            margin: 10px 0;
+            padding: 14px 20px;
+            width: 100%;
+            max-width: 300px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .input-box button {
+            margin-top: 10px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            background: #ffff76;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .input-box button:hover {
+            background-color: #ffd700;
+        }
+
+        .input-box input::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+        }
+
+        #result {
+            font-size: 1.5em;
+        }
+
+        #result span {
+            color: #ffff76;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 1em;
+            font-family: 'Algerian', sans-serif;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .calculator h1 {
+                font-size: 2em;
+            }
+
+            .input-box {
+                padding: 20px;
+            }
+
+            .input-box input {
+                margin-bottom: 10px;
+            }
+
+            .input-box button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+   
+    <div class="container">
+        <div class="calculator">
+            <h1><span>Age Calculator</span></h1>
+            <div class="input-box">
+                <input type="date" id="date">
+                <button onclick="calculateAge()">Calculate Age</button>
+            </div>
+            <p id="result"></p>
+        </div>
+    </div>
+    <div class="footer">Designed by Charan</div>
+
+    <script>
+        document.getElementById("date").max = new Date().toISOString().split("T")[0];
+
+        function calculateAge() {
+            let userInput = document.getElementById("date");
+            let result = document.getElementById("result");
+
+            let birthDate = new Date(userInput.value);
+            let d1 = birthDate.getDate();
+            let m1 = birthDate.getMonth() + 1;
+            let y1 = birthDate.getFullYear();
+
+            let today = new Date();
+            let d2 = today.getDate();
+            let m2 = today.getMonth() + 1;
+            let y2 = today.getFullYear();
+
+            let d3, m3, y3;
+            y3 = y2 - y1;
+
+            if (m2 >= m1) {
+                m3 = m2 - m1;
+            } else {
+                y3--;
+                m3 = 12 + m2 - m1;
+            }
+
+            if (d2 >= d1) {
+                d3 = d2 - d1;
+            } else {
+                m3--;
+                d3 = getDaysInMonth(y1, m1) + d2 - d1;
+            }
+            if (m3 < 0) {
+                m3 = 11;
+                y3--;
+            }
+            result.innerHTML = `You are <span>${y3}</span> Years, <span>${m3}</span> Months, <span>${d3}</span> Days Old`;
+        }
+
+        function getDaysInMonth(year, month) {
+            return new Date(year, month, 0).getDate();
+        }
+    </script>
+</body>
+</html>
